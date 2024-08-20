@@ -1,12 +1,14 @@
 {
-  "name": "wix-kickstart-2024-portfolio-website-builder",
+  "name": "personal-portfolio-builder",
   "version": "1.0.0",
-  "description": "This project is a streamlined website builder focused on creating personal portfolios. Built with React for the frontend and Node.js for the backend, it offers users an intuitive way to showcase their work online.",
-  "main": "index.js",
+  "description": "A project for building a personal portfolio.",
+  "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/server.js"
   },
-  "keywords": [],
+  "dependencies": {
+    "express": "^4.19.2"
+  },
   "author": "",
   "license": "ISC"
 }
