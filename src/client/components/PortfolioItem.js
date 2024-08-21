@@ -27,7 +27,7 @@ const ItemTitle = styled.h3`
 `;
 
 const ItemDescription = styled.p`
-  margin: 0;
+  margin: 0;  
 `;
 
 const PortfolioItem = ({ title, description, imageUrl }) => (
