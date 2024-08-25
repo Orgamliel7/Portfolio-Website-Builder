@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { FaUser, FaEnvelope, FaLinkedin, FaGithub } from 'react-icons/fa';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import PortfolioItem from './components/PortfolioItem';
 
+const GlobalStyle = createGlobalStyle`
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+`;
+
 const AppContainer = styled.div`
-  font-family: 'Arial', sans-serif;
-  color: #333;
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
@@ -22,6 +30,10 @@ const Main = styled.main`
 const ProfileSection = styled.section`
   text-align: center;
   margin-bottom: 40px;
+  background-color: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
 const ProfileImage = styled.img`
@@ -30,17 +42,20 @@ const ProfileImage = styled.img`
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 20px;
+  border: 3px solid #3498db;
 `;
 
 const Name = styled.h1`
   font-size: 2.5em;
   margin-bottom: 10px;
+  color: #2c3e50;
 `;
 
 const Bio = styled.p`
   font-size: 1.2em;
   max-width: 600px;
   margin: 0 auto 20px;
+  color: #34495e;
 `;
 
 const SocialLinks = styled.div`
@@ -48,12 +63,21 @@ const SocialLinks = styled.div`
   justify-content: center;
   gap: 20px;
   font-size: 1.5em;
+
+  a {
+    color: #3498db;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: #2980b9;
+    }
+  }
 `;
 
 const PortfolioSection = styled.section`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+  gap: 30px;
   width: 100%;
 `;
 
@@ -65,27 +89,30 @@ const App = () => {
   ]);
 
   return (
-    <AppContainer>
-      <Header />
-      <Main>
-        <ProfileSection>
-          <ProfileImage src="https://via.placeholder.com/150" alt="Profile" />
-          <Name>John Doe</Name>
-          <Bio>Passionate web developer with a knack for creating beautiful and functional websites.</Bio>
-          <SocialLinks>
-            <FaEnvelope />
-            <FaLinkedin />
-            <FaGithub />
-          </SocialLinks>
-        </ProfileSection>
-        <PortfolioSection>
-          {portfolioItems.map(item => (
-            <PortfolioItem key={item.id} {...item} />
-          ))}
-        </PortfolioSection>
-      </Main>
-      <Footer />
-    </AppContainer>
+    <>
+      <GlobalStyle />
+      <AppContainer>
+        <Header />
+        <Main>
+          <ProfileSection>
+            <ProfileImage src="https://via.placeholder.com/150" alt="Profile" />
+            <Name>Or Gamliel</Name>
+            <Bio>Passionate web developer with a knack for creating beautiful and functional websites.</Bio>
+            <SocialLinks>
+              <a href="mailto:orgamliel777@gmail.com"><FaEnvelope /></a>
+              <a href="https://www.linkedin.com/in/or-gamliel/" target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>
+              <a href="https://github.com/Orgamliel7" target="_blank" rel="noopener noreferrer"><FaGithub /></a>
+            </SocialLinks>
+          </ProfileSection>
+          <PortfolioSection>
+            {portfolioItems.map(item => (
+              <PortfolioItem key={item.id} {...item} />
+            ))}
+          </PortfolioSection>
+        </Main>
+        <Footer />
+      </AppContainer>
+    </>
   );
 };
 
