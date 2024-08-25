@@ -4,11 +4,15 @@ import { FaUser, FaEnvelope, FaLinkedin, FaGithub } from 'react-icons/fa';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import PortfolioItem from './components/PortfolioItem';
+import backgroundImage from './assets/background.jpg';
 
 const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Roboto', sans-serif;
     background-color: #f0f2f5;
+    background-image: url(${backgroundImage});    
+    background-size: cover;
+    background-position: center;
     color: #333;
     margin: 0;
     padding: 0;
