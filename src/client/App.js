@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import PortfolioItem from './components/PortfolioItem';
 import backgroundImage from './assets/background.jpg';
+import selfImage from './assets/self.jpg';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -48,6 +49,12 @@ const ProfileImage = styled.img`
   margin-bottom: 20px;
   border: 3px solid #3498db;
 `;
+
+function profileImageSetter() {
+  return (
+    <ProfileImage src={selfImage} alt="Profile" />
+  );
+}
 
 const Name = styled.h1`
   font-size: 2.5em;
@@ -99,7 +106,7 @@ const App = () => {
         <Header />
         <Main>
           <ProfileSection>
-            <ProfileImage src="https://via.placeholder.com/150" alt="Profile" />
+            {profileImageSetter()} 
             <Name>Or Gamliel</Name>
             <Bio>Passionate web developer with a knack for creating beautiful and functional websites.</Bio>
             <SocialLinks>
