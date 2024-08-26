@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import { FaUser, FaEnvelope, FaLinkedin, FaGithub } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaLinkedin, FaGithub, FaPlus } from 'react-icons/fa';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import PortfolioItem from './components/PortfolioItem';
@@ -41,6 +41,16 @@ const ProfileSection = styled.section`
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
+
+const ProfileImage = styled.img`
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+  border: 3px solid #3498db;
+`;
+
 const IconButton = styled.button`
   background: none;
   border: none;
@@ -50,13 +60,30 @@ const IconButton = styled.button`
   margin: 0 10px;
 `;
 
-const ProfileImage = styled.img`
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 20px;
-  border: 3px solid #3498db;
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledInput = styled.input`
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+`;
+
+const StyledButton = styled.button`
+  background-color: #3498db;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  
+  &:hover {
+    background-color: #2980b9;
+  }
 `;
 
 function profileImageSetter() {
@@ -242,7 +269,5 @@ const ProjectForm = ({ onSubmit }) => {
     </StyledForm>
   );
 };
-
-
 
 export default App;
