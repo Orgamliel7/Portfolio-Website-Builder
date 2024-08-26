@@ -22,6 +22,14 @@ const StyledInput = styled.input`
   border-radius: 4px;
 `;
 
+const StyledTextarea = styled.textarea`
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+`;
+
 const StyledButton = styled.button`
   background-color: #3498db;
   color: white;
@@ -60,6 +68,7 @@ const PortfolioForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     name: '',
     profilePicture: '',
+    description: 'Passionate web developer with a knack for creating beautiful and functional websites.',
   });
 
   const handleChange = (e) => {
@@ -127,6 +136,13 @@ const PortfolioForm = ({ onSubmit }) => {
             onChange={handleChange}
           />
         </FileInput>
+        <StyledTextarea
+          name="description"
+          placeholder="Your Description (Optional)"
+          value={formData.description}
+          onChange={handleChange}
+          rows="4"
+        />
         <StyledButton type="submit">Create Portfolio</StyledButton>
       </StyledForm>
     </FormContainer>
