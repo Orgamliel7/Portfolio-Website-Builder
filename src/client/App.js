@@ -41,6 +41,14 @@ const ProfileSection = styled.section`
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
+const IconButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5em;
+  color: #3498db;
+  margin: 0 10px;
+`;
 
 const ProfileImage = styled.img`
   width: 150px;
@@ -94,16 +102,25 @@ const PortfolioSection = styled.section`
 `;
 
 const App = () => {
-  const [portfolioItems] = useState([
-    { id: 1, title: 'Project 1', description: 'A cool project', imageUrl: 'https://via.placeholder.com/300' },
-    { id: 2, title: 'Project 2', description: 'Another awesome project', imageUrl: 'https://via.placeholder.com/300' },
-    { id: 3, title: 'Project 3', description: 'Yet another great project', imageUrl: 'https://via.placeholder.com/300' },
-  ]);
-
   const [userData, setUserData] = useState(null);
+  const [showEmailInput, setShowEmailInput] = useState(false);
+  const [showLinkedInInput, setShowLinkedInInput] = useState(false);
+  const [showGithubInput, setShowGithubInput] = useState(false);
+  const [showProjectInput, setShowProjectInput] = useState(false);
 
   const handleFormSubmit = (formData) => {
     setUserData(formData);
+  };
+
+  const handleAdditionalInfo = (type, value) => {
+    setUserData({ ...userData, [type]: value });
+  };
+
+  const handleAddProject = (project) => {
+    setUserData({
+      ...userData,
+      projects: [...(userData.projects || []), { ...project, id: Date.now() }]
+    });
   };
 
   return (
@@ -113,30 +130,119 @@ const App = () => {
         <Header />
         <Main>
           {userData ? (
-            <ProfileSection>
-              <ProfileImage src={userData.profilePicture || selfImage} alt="Profile" />
-              <Name>{userData.name}</Name>
-              <Bio>Passionate web developer with a knack for creating beautiful and functional websites.</Bio>
-              <SocialLinks>
-                <a href={`mailto:${userData.email}`}><FaEnvelope /></a>
-                <a href={userData.linkedin} target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>
-                <a href={userData.github} target="_blank" rel="noopener noreferrer"><FaGithub /></a>
-              </SocialLinks>
-            </ProfileSection>
+            <>
+              <ProfileSection>
+                <ProfileImage src={userData.profilePicture || selfImage} alt="Profile" />
+                <Name>{userData.name}</Name>
+                <Bio>Passionate web developer with a knack for creating beautiful and functional websites.</Bio>
+                <SocialLinks>
+                  {userData.email ? (
+                    <a href={`mailto:${userData.email}`}><FaEnvelope /></a>
+                  ) : (
+                    <IconButton onClick={() => setShowEmailInput(!showEmailInput)}><FaPlus /><FaEnvelope /></IconButton>
+                  )}
+                  {userData.linkedin ? (
+                    <a href={userData.linkedin} target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>
+                  ) : (
+                    <IconButton onClick={() => setShowLinkedInInput(!showLinkedInInput)}><FaPlus /><FaLinkedin /></IconButton>
+                  )}
+                  {userData.github ? (
+                    <a href={userData.github} target="_blank" rel="noopener noreferrer"><FaGithub /></a>
+                  ) : (
+                    <IconButton onClick={() => setShowGithubInput(!showGithubInput)}><FaPlus /><FaGithub /></IconButton>
+                  )}
+                </SocialLinks>
+                {showEmailInput && (
+                  <StyledInput
+                    type="email"
+                    placeholder="Enter your email"
+                    onBlur={(e) => handleAdditionalInfo('email', e.target.value)}
+                  />
+                )}
+                {showLinkedInInput && (
+                  <StyledInput
+                    type="url"
+                    placeholder="Enter your LinkedIn URL"
+                    onBlur={(e) => handleAdditionalInfo('linkedin', e.target.value)}
+                  />
+                )}
+                {showGithubInput && (
+                  <StyledInput
+                    type="url"
+                    placeholder="Enter your GitHub URL"
+                    onBlur={(e) => handleAdditionalInfo('github', e.target.value)}
+                  />
+                )}
+              </ProfileSection>
+              <PortfolioSection>
+                {userData.projects && userData.projects.map(item => (
+                  <PortfolioItem key={item.id} {...item} />
+                ))}
+                <IconButton onClick={() => setShowProjectInput(!showProjectInput)}><FaPlus /> Add Project</IconButton>
+                {showProjectInput && (
+                  <ProjectForm onSubmit={handleAddProject} />
+                )}
+              </PortfolioSection>
+            </>
           ) : (
             <PortfolioForm onSubmit={handleFormSubmit} />
           )}
-          <PortfolioSection>
-            {portfolioItems.map(item => (
-              <PortfolioItem key={item.id} {...item} />
-            ))}
-          </PortfolioSection>
         </Main>
         <Footer />
       </AppContainer>
     </>
   );
 };
+
+const ProjectForm = ({ onSubmit }) => {
+  const [project, setProject] = useState({ title: '', description: '', imageUrl: '', projectUrl: '' });
+
+  const handleChange = (e) => {
+    setProject({ ...project, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(project);
+    setProject({ title: '', description: '', imageUrl: '', projectUrl: '' });
+  };
+
+  return (
+    <StyledForm onSubmit={handleSubmit}>
+      <StyledInput
+        type="text"
+        name="title"
+        placeholder="Project Title"
+        value={project.title}
+        onChange={handleChange}
+        required
+      />
+      <StyledInput
+        type="text"
+        name="description"
+        placeholder="Project Description"
+        value={project.description}
+        onChange={handleChange}
+      />
+      <StyledInput
+        type="url"
+        name="imageUrl"
+        placeholder="Project Image URL"
+        value={project.imageUrl}
+        onChange={handleChange}
+      />
+      <StyledInput
+        type="url"
+        name="projectUrl"
+        placeholder="Project URL"
+        value={project.projectUrl}
+        onChange={handleChange}
+      />
+      <StyledButton type="submit">Add Project</StyledButton>
+    </StyledForm>
+  );
+};
+
 
 
 export default App;
