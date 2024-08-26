@@ -7,7 +7,7 @@ const FormContainer = styled.div`
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   max-width: 500px;
-  margin: 20px auto;
+  margin: 100px auto 20px; /* Increased top margin to move the form down further */
 `;
 
 const StyledForm = styled.form`
@@ -16,14 +16,14 @@ const StyledForm = styled.form`
 `;
 
 const StyledInput = styled.input`
-  margin-bottom: 10px;
+  margin-bottom: 15px; /* Adjusted margin for spacing */
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 4px;
 `;
 
 const StyledTextarea = styled.textarea`
-  margin-bottom: 10px;
+  margin-bottom: 15px; /* Adjusted margin for spacing */
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -37,7 +37,7 @@ const StyledButton = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 20px;
   
   &:hover {
     background-color: #2980b9;
@@ -50,7 +50,7 @@ const FileInput = styled.div`
   border-radius: 4px;
   text-align: center;
   cursor: pointer;
-  margin-bottom: 10px;
+  margin-bottom: 15px; /* Adjusted margin for spacing */
   color: #999;
   background-color: #f9f9f9;
 

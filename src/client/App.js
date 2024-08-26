@@ -4,23 +4,26 @@ import { FaEnvelope, FaLinkedin, FaGithub, FaPlus } from 'react-icons/fa';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import PortfolioItem from './components/PortfolioItem';
-import backgroundImage from './assets/background.jpg';
+import backgroundImage from './assets/Lake.jpg';
 import selfImage from './assets/self.jpg';
 import PortfolioForm from './components/PortfolioForm';
 
 const GlobalStyle = createGlobalStyle`
-  body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f0f2f5;
-    background-image: url(${backgroundImage});
-    background-size: cover;
-    background-position: center;
-    color: #333;
+  html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
   }
-`;
 
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-image: url(${backgroundImage});
+    background-size: cover; /* Ensure the image covers the entire area */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent repeating the image */
+    color: #333;
+  }
+`;
 const AppContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
