@@ -39,6 +39,7 @@ const StyledButton = styled.button`
 const PortfolioForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     name: '',
+    profilePicture: '',
   });
 
   const handleChange = (e) => {
@@ -60,6 +61,13 @@ const PortfolioForm = ({ onSubmit }) => {
           value={formData.name}
           onChange={handleChange}
           required
+        />
+        <StyledInput
+          type="text"
+          name="profilePicture"
+          placeholder="Profile Picture URL(optional) "
+          value={formData.profilePicture}
+          onChange={handleChange}
         />
         <StyledButton type="submit">Create Portfolio</StyledButton>
       </StyledForm>
