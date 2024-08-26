@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import { FaUser, FaEnvelope, FaLinkedin, FaGithub, FaPlus } from 'react-icons/fa';
+import { FaEnvelope, FaLinkedin, FaGithub, FaPlus } from 'react-icons/fa';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import PortfolioItem from './components/PortfolioItem';
@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Roboto', sans-serif;
     background-color: #f0f2f5;
-    background-image: url(${backgroundImage});    
+    background-image: url(${backgroundImage});
     background-size: cover;
     background-position: center;
     color: #333;
@@ -86,12 +86,6 @@ const StyledButton = styled.button`
   }
 `;
 
-function profileImageSetter() {
-  return (
-    <ProfileImage src={selfImage} alt="Profile" />
-  );
-}
-
 const Name = styled.h1`
   font-size: 2.5em;
   margin-bottom: 10px;
@@ -136,18 +130,21 @@ const App = () => {
   const [showProjectInput, setShowProjectInput] = useState(false);
 
   const handleFormSubmit = (formData) => {
-    setUserData(formData);
+    setUserData({
+      ...formData,
+      profilePicture: formData.profilePicture || selfImage
+    });
   };
 
   const handleAdditionalInfo = (type, value) => {
-    setUserData({ ...userData, [type]: value });
+    setUserData(prevUserData => ({ ...prevUserData, [type]: value }));
   };
 
   const handleAddProject = (project) => {
-    setUserData({
-      ...userData,
-      projects: [...(userData.projects || []), { ...project, id: Date.now() }]
-    });
+    setUserData(prevUserData => ({
+      ...prevUserData,
+      projects: [...(prevUserData.projects || []), { ...project, id: Date.now() }]
+    }));
   };
 
   return (
@@ -159,7 +156,7 @@ const App = () => {
           {userData ? (
             <>
               <ProfileSection>
-                <ProfileImage src={userData.profilePicture || selfImage} alt="Profile" />
+                <ProfileImage src={userData.profilePicture} alt="Profile" />
                 <Name>{userData.name}</Name>
                 <Bio>Passionate web developer with a knack for creating beautiful and functional websites.</Bio>
                 <SocialLinks>
