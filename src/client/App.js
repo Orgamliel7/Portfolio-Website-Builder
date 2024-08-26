@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import PortfolioItem from './components/PortfolioItem';
 import backgroundImage from './assets/background.jpg';
 import selfImage from './assets/self.jpg';
+import PortfolioForm from './components/PortfolioForm';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -99,22 +100,32 @@ const App = () => {
     { id: 3, title: 'Project 3', description: 'Yet another great project', imageUrl: 'https://via.placeholder.com/300' },
   ]);
 
+  const [userData, setUserData] = useState(null);
+
+  const handleFormSubmit = (formData) => {
+    setUserData(formData);
+  };
+
   return (
     <>
       <GlobalStyle />
       <AppContainer>
         <Header />
         <Main>
-          <ProfileSection>
-            {profileImageSetter()} 
-            <Name>Or Gamliel</Name>
-            <Bio>Passionate web developer with a knack for creating beautiful and functional websites.</Bio>
-            <SocialLinks>
-              <a href="mailto:orgamliel777@gmail.com"><FaEnvelope /></a>
-              <a href="https://www.linkedin.com/in/or-gamliel/" target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>
-              <a href="https://github.com/Orgamliel7" target="_blank" rel="noopener noreferrer"><FaGithub /></a>
-            </SocialLinks>
-          </ProfileSection>
+          {userData ? (
+            <ProfileSection>
+              <ProfileImage src={userData.profilePicture || selfImage} alt="Profile" />
+              <Name>{userData.name}</Name>
+              <Bio>Passionate web developer with a knack for creating beautiful and functional websites.</Bio>
+              <SocialLinks>
+                <a href={`mailto:${userData.email}`}><FaEnvelope /></a>
+                <a href={userData.linkedin} target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>
+                <a href={userData.github} target="_blank" rel="noopener noreferrer"><FaGithub /></a>
+              </SocialLinks>
+            </ProfileSection>
+          ) : (
+            <PortfolioForm onSubmit={handleFormSubmit} />
+          )}
           <PortfolioSection>
             {portfolioItems.map(item => (
               <PortfolioItem key={item.id} {...item} />
@@ -126,5 +137,6 @@ const App = () => {
     </>
   );
 };
+
 
 export default App;
