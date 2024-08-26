@@ -36,6 +36,26 @@ const StyledButton = styled.button`
   }
 `;
 
+const FileInput = styled.div`
+  border: 2px dashed #ddd;
+  padding: 20px;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 10px;
+  color: #999;
+  background-color: #f9f9f9;
+
+  &:hover {
+    border-color: #3498db;
+    color: #3498db;
+  }
+
+  input {
+    display: none;
+  }
+`;
+
 const PortfolioForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     name: '',
@@ -43,7 +63,36 @@ const PortfolioForm = ({ onSubmit }) => {
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name === 'profilePicture') {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, profilePicture: reader.result });
+      };
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const file = e.dataTransfer.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setFormData({ ...formData, profilePicture: reader.result });
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -62,13 +111,22 @@ const PortfolioForm = ({ onSubmit }) => {
           onChange={handleChange}
           required
         />
-        <StyledInput
-          type="text"
-          name="profilePicture"
-          placeholder="Profile Picture URL(optional) "
-          value={formData.profilePicture}
-          onChange={handleChange}
-        />
+        <FileInput
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+          onClick={() => document.getElementById('fileInput').click()}
+        >
+          {formData.profilePicture
+            ? <img src={formData.profilePicture} alt="Profile Preview" style={{ maxWidth: '100%', borderRadius: '4px' }} />
+            : 'Drag & drop your profile picture here or click to browse'}
+          <input
+            type="file"
+            id="fileInput"
+            name="profilePicture"
+            accept="image/*"
+            onChange={handleChange}
+          />
+        </FileInput>
         <StyledButton type="submit">Create Portfolio</StyledButton>
       </StyledForm>
     </FormContainer>
