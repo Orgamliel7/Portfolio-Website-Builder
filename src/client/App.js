@@ -4,7 +4,10 @@ import { FaEnvelope, FaLinkedin, FaGithub, FaPlus } from 'react-icons/fa';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import PortfolioItem from './components/PortfolioItem';
-import backgroundImage from './assets/Lake.jpg';
+import BackgroundSelector from './components/BackgroundSelector';
+import backgroundImageLake from './assets/Lake.jpg';
+import backgroundImageSea from './assets/Sea.jpg';
+import backgroundImageOcean from './assets/Ocean.jpg';
 import selfImage from './assets/self.jpg';
 import PortfolioForm from './components/PortfolioForm';
 
@@ -17,13 +20,14 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: 'Roboto', sans-serif;
-    background-image: url(${backgroundImage});
-    background-size: cover; /* Ensure the image covers the entire area */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Prevent repeating the image */
+    background-image: url(${props => props.backgroundImage});
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     color: #333;
   }
 `;
+
 const AppContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
@@ -63,11 +67,6 @@ const IconButton = styled.button`
   margin: 0 10px;
 `;
 
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
-
 const StyledInput = styled.input`
   margin-bottom: 10px;
   padding: 8px;
@@ -83,7 +82,7 @@ const StyledButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
   margin-top: 10px;
-  
+
   &:hover {
     background-color: #2980b9;
   }
@@ -131,6 +130,7 @@ const App = () => {
   const [showLinkedInInput, setShowLinkedInInput] = useState(false);
   const [showGithubInput, setShowGithubInput] = useState(false);
   const [showProjectInput, setShowProjectInput] = useState(false);
+  const [backgroundImage, setBackgroundImage] = useState(backgroundImageLake);
 
   const handleFormSubmit = (formData) => {
     setUserData({
@@ -152,10 +152,13 @@ const App = () => {
 
   return (
     <>
-      <GlobalStyle />
+      <GlobalStyle backgroundImage={backgroundImage} />
       <AppContainer>
         <Header />
         <Main>
+          {!userData && (
+            <BackgroundSelector onSelect={setBackgroundImage} selectedBackground={backgroundImage} />
+          )}
           {userData ? (
             <>
               <ProfileSection>
