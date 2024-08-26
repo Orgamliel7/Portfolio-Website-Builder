@@ -158,7 +158,7 @@ const App = () => {
               <ProfileSection>
                 <ProfileImage src={userData.profilePicture} alt="Profile" />
                 <Name>{userData.name}</Name>
-                <Bio>Passionate web developer with a knack for creating beautiful and functional websites.</Bio>
+                <Bio>{userData.description || "Passionate web developer with a knack for creating beautiful and functional websites."}</Bio>
                 <SocialLinks>
                   {userData.email ? (
                     <a href={`mailto:${userData.email}`}><FaEnvelope /></a>
@@ -218,6 +218,7 @@ const App = () => {
   );
 };
 
+// The missing ProjectForm component
 const ProjectForm = ({ onSubmit }) => {
   const [project, setProject] = useState({ title: '', description: '', imageUrl: '', projectUrl: '' });
 
