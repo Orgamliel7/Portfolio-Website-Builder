@@ -29,10 +29,18 @@ const StyledButton = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  margin-top: 10px;
   
   &:hover {
     background-color: #2980b9;
   }
+`;
+
+const ProjectContainer = styled.div`
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
 `;
 
 const PortfolioForm = ({ onSubmit }) => {
@@ -42,10 +50,30 @@ const PortfolioForm = ({ onSubmit }) => {
     linkedin: '',
     email: '',
     profilePicture: '',
+    projects: []
+  });
+
+  const [currentProject, setCurrentProject] = useState({
+    title: '',
+    description: '',
+    imageUrl: '',
+    projectUrl: ''
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleProjectChange = (e) => {
+    setCurrentProject({ ...currentProject, [e.target.name]: e.target.value });
+  };
+
+  const addProject = () => {
+    setFormData({
+      ...formData,
+      projects: [...formData.projects, { ...currentProject, id: Date.now() }]
+    });
+    setCurrentProject({ title: '', description: '', imageUrl: '', projectUrl: '' });
   };
 
   const handleSubmit = (e) => {
@@ -93,6 +121,44 @@ const PortfolioForm = ({ onSubmit }) => {
           value={formData.profilePicture}
           onChange={handleChange}
         />
+        
+        <h3>Add Projects</h3>
+        <ProjectContainer>
+          <StyledInput
+            type="text"
+            name="title"
+            placeholder="Project Title"
+            value={currentProject.title}
+            onChange={handleProjectChange}
+          />
+          <StyledInput
+            type="text"
+            name="description"
+            placeholder="Project Description"
+            value={currentProject.description}
+            onChange={handleProjectChange}
+          />
+          <StyledInput
+            type="text"
+            name="imageUrl"
+            placeholder="Project Image URL"
+            value={currentProject.imageUrl}
+            onChange={handleProjectChange}
+          />
+          <StyledInput
+            type="text"
+            name="projectUrl"
+            placeholder="Project URL"
+            value={currentProject.projectUrl}
+            onChange={handleProjectChange}
+          />
+          <StyledButton type="button" onClick={addProject}>Add Project</StyledButton>
+        </ProjectContainer>
+        
+        {formData.projects.map((project, index) => (
+          <div key={project.id}>Project {index + 1}: {project.title}</div>
+        ))}
+        
         <StyledButton type="submit">Create Portfolio</StyledButton>
       </StyledForm>
     </FormContainer>
