@@ -12,21 +12,21 @@ describe('App', () => {
   test('renders profile after form submission', async () => {
     render(<App />);
     
-    fireEvent.change(screen.getByPlaceholderText('Your Name'), { target: { value: 'John Doe' } });
+    fireEvent.change(screen.getByPlaceholderText('Your Name'), { target: { value: 'Or Gamliel' } });
     fireEvent.click(screen.getByText('Create Portfolio'));
     
-    expect(await screen.findByText('John Doe')).toBeInTheDocument();
+    expect(await screen.findByText('Or Gamliel')).toBeInTheDocument();
   });
 
   test('allows adding a new project', async () => {
     render(<App />);
     
     // Submit the initial form
-    fireEvent.change(screen.getByPlaceholderText('Your Name'), { target: { value: 'John Doe' } });
+    fireEvent.change(screen.getByPlaceholderText('Your Name'), { target: { value: 'Or Gamliel' } });
     fireEvent.click(screen.getByText('Create Portfolio'));
     
     // Wait for the profile to render
-    await screen.findByText('John Doe');
+    await screen.findByText('Or Gamliel');
     
     // Click to add a new project
     fireEvent.click(screen.getByText('Add Project'));
