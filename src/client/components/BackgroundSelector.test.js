@@ -25,6 +25,6 @@ describe('BackgroundSelector', () => {
     render(<BackgroundSelector onSelect={onSelect} selectedBackground="./assets/Sea.jpg" />);
     
     expect(screen.getByAltText('Sea')).toHaveStyle('border: 2px solid #3498db');
-    expect(screen.getByAltText('Lake')).toHaveStyle('border: 2px solid #3498db');
+    expect(screen.getByAltText('Lake')).toHaveStyle('border: 2px solid transparent');
   });
 });

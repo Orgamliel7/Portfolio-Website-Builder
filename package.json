@@ -54,7 +54,10 @@
     "transform": {
       "^.+\\.(js|jsx)$": "babel-jest"
     },
-    "moduleDirectories": ["node_modules", "src"]
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ]
   },
   "author": "",
   "license": "ISC"

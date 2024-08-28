@@ -40,6 +40,14 @@ const Main = styled.main`
   align-items: center;
 `;
 
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 500px;
+  margin: 0 auto;
+`;
+
 const ProfileSection = styled.section`
   text-align: center;
   margin-bottom: 40px;

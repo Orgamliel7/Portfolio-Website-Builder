@@ -28,7 +28,7 @@ describe('App', () => {
     await screen.findByText('Or Gamliel');
     
     // Click to add a new project
-    fireEvent.click(screen.getByText('Add Project'));
+    fireEvent.click(screen.getByRole('button', { name: /add project/i }));
     
     // Fill in project details
     fireEvent.change(screen.getByPlaceholderText('Project Title'), { target: { value: 'My Awesome Project' } });

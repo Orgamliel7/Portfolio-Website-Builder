@@ -7,28 +7,29 @@ describe('PortfolioForm', () => {
     const mockSubmit = jest.fn();
     render(<PortfolioForm onSubmit={mockSubmit} />);
     
-    fireEvent.change(screen.getByPlaceholderText('Your Name'), { target: { value: 'John Doe' } });
+    fireEvent.change(screen.getByPlaceholderText('Your Name'), { target: { value: 'Or Gamliel' } });
     fireEvent.change(screen.getByPlaceholderText('Your Description (Optional)'), { target: { value: 'Web Developer' } });
     fireEvent.click(screen.getByText('Create Portfolio'));
     
     expect(mockSubmit).toHaveBeenCalledWith(expect.objectContaining({
-      name: 'John Doe',
+      name: 'Or Gamliel',
       description: 'Web Developer'
     }));
   });
 
-  test('displays file name when image is selected', () => {
+  test('displays image preview when an image is selected', () => {
     render(<PortfolioForm onSubmit={() => {}} />);
     
-    const file = new File(['(⌐□_□)'], 'profile.png', { type: 'image/png' });
+    const file = new File(['dummy content'], 'profile.png', { type: 'image/png' });
     const fileInput = screen.getByLabelText(/Drag & drop your profile picture here or click to browse/i);
     
     Object.defineProperty(fileInput, 'files', {
-      value: [file]
+      value: [file],
+      writable: false,
     });
     
     fireEvent.change(fileInput);
     
-    expect(screen.getByText('profile.png')).toBeInTheDocument();
+    expect(screen.getByAltText('Profile Preview')).toBeInTheDocument();
   });
 });
