@@ -1,5 +1,5 @@
 
-# 🚀 Wix Kickstart 2024 - Portfolio Website Builder
+# 🚀 Portfolio Website Builder
 
 Welcome to the **Personal Portfolio Website Builder**! 🎨👨‍💻👩‍💻
 
