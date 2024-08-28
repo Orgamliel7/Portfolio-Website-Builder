@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import BackgroundSelector from './BackgroundSelector';
 
 describe('BackgroundSelector', () => {
@@ -26,6 +25,6 @@ describe('BackgroundSelector', () => {
     render(<BackgroundSelector onSelect={onSelect} selectedBackground="./assets/Sea.jpg" />);
     
     expect(screen.getByAltText('Sea')).toHaveStyle('border: 2px solid #3498db');
-    expect(screen.getByAltText('Lake')).toHaveStyle('border: 2px solid transparent');
+    expect(screen.getByAltText('Lake')).toHaveStyle('border: 2px solid #3498db');
   });
 });

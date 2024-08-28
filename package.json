@@ -29,21 +29,32 @@
     "@babel/preset-react": "^7.24.7",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.0",
+    "babel-jest": "^29.7.0",
     "concurrently": "^6.5.1",
     "file-loader": "^6.2.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "jest-styled-components": "^7.2.0",
     "nodemon": "^3.1.4"
   },
   "jest": {
     "testEnvironment": "jsdom",
     "moduleNameMapper": {
-      "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+      "\\.(css|less|scss|sass)$": "identity-obj-proxy",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
     },
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
+    ],
     "testMatch": [
-      "<rootDir>/src/client/components/**/*.test.js"
-    ]
+      "<rootDir>/src/client/**/*.test.js",
+      "<rootDir>/src/client/*.test.js"
+    ],
+    "transform": {
+      "^.+\\.(js|jsx)$": "babel-jest"
+    },
+    "moduleDirectories": ["node_modules", "src"]
   },
   "author": "",
   "license": "ISC"
