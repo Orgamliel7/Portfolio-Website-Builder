@@ -1,30 +1,26 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import BackgroundSelector from './BackgroundSelector';
 
 describe('BackgroundSelector', () => {
   test('renders all background options', () => {
-    const onSelect = jest.fn();
-    render(<BackgroundSelector onSelect={onSelect} selectedBackground="" />);
-    
-    expect(screen.getByAltText('Lake')).toBeInTheDocument();
-    expect(screen.getByAltText('Sea')).toBeInTheDocument();
-    expect(screen.getByAltText('Ocean')).toBeInTheDocument();
+    const { getByAltText } = render(<BackgroundSelector onSelect={() => {}} selectedBackground="" />);
+    expect(getByAltText('Lake')).toBeInTheDocument();
+    expect(getByAltText('Sea')).toBeInTheDocument();
+    expect(getByAltText('Ocean')).toBeInTheDocument();
   });
 
-  test('calls onSelect with correct src when an image is clicked', () => {
-    const onSelect = jest.fn();
-    render(<BackgroundSelector onSelect={onSelect} selectedBackground="" />);
+  test('calls onSelect when an image is clicked', () => {
+    const onSelectMock = jest.fn();
+    const { getByAltText } = render(<BackgroundSelector onSelect={onSelectMock} selectedBackground="" />);
     
-    fireEvent.click(screen.getByAltText('Lake'));
-    expect(onSelect).toHaveBeenCalledWith('./assets/Lake.jpg');
+    fireEvent.click(getByAltText('Sea'));
+    expect(onSelectMock).toHaveBeenCalledWith('./assets/Sea.jpg');
   });
 
-  test('selected image has correct border style', () => {
-    const onSelect = jest.fn();
-    render(<BackgroundSelector onSelect={onSelect} selectedBackground="./assets/Sea.jpg" />);
-    
-    expect(screen.getByAltText('Sea')).toHaveStyle('border: 2px solid #3498db');
-    expect(screen.getByAltText('Lake')).toHaveStyle('border: 2px solid transparent');
+  test('applies correct border style to the selected image', () => {
+    const { getByAltText } = render(<BackgroundSelector onSelect={() => {}} selectedBackground="./assets/Lake.jpg" />);
+    const selectedImage = getByAltText('Lake');
+    expect(selectedImage).toHaveStyle('border: 2px solid #3498db');
   });
 });

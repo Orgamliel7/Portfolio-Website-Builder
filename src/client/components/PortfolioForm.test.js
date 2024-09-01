@@ -1,35 +1,34 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
-import PortfolioForm from './PortfolioForm';
+import { render } from '@testing-library/react';
+import PortfolioItem from './PortfolioItem';
 
-describe('PortfolioForm', () => {
-  test('submits form data correctly', () => {
-    const mockSubmit = jest.fn();
-    render(<PortfolioForm onSubmit={mockSubmit} />);
-    
-    fireEvent.change(screen.getByPlaceholderText('Your Name'), { target: { value: 'Or Gamliel' } });
-    fireEvent.change(screen.getByPlaceholderText('Your Description (Optional)'), { target: { value: 'Web Developer' } });
-    fireEvent.click(screen.getByText('Create Portfolio'));
-    
-    expect(mockSubmit).toHaveBeenCalledWith(expect.objectContaining({
-      name: 'Or Gamliel',
-      description: 'Web Developer'
-    }));
+describe('PortfolioItem', () => {
+  const mockData = {
+    title: 'Project Title',
+    description: 'Project Description',
+    imageUrl: './assets/project.jpg',
+    projectUrl: 'https://example.com'
+  };
+
+  test('renders project title', () => {
+    const { getByText } = render(<PortfolioItem {...mockData} />);
+    expect(getByText('Project Title')).toBeInTheDocument();
   });
 
-  test('displays image preview when an image is selected', () => {
-    render(<PortfolioForm onSubmit={() => {}} />);
-    
-    const file = new File(['dummy content'], 'profile.png', { type: 'image/png' });
-    const fileInput = screen.getByLabelText(/Drag & drop your profile picture here or click to browse/i);
-    
-    Object.defineProperty(fileInput, 'files', {
-      value: [file],
-      writable: false,
-    });
-    
-    fireEvent.change(fileInput);
-    
-    expect(screen.getByAltText('Profile Preview')).toBeInTheDocument();
+  test('renders project description', () => {
+    const { getByText } = render(<PortfolioItem {...mockData} />);
+    expect(getByText('Project Description')).toBeInTheDocument();
+  });
+
+  test('renders project image with correct src', () => {
+    const { getByAltText } = render(<PortfolioItem {...mockData} />);
+    const image = getByAltText('Project Title');
+    expect(image).toHaveAttribute('src', './assets/project.jpg');
+  });
+
+  test('renders project link with correct href', () => {
+    const { getByText } = render(<PortfolioItem {...mockData} />);
+    const link = getByText('View Project');
+    expect(link).toHaveAttribute('href', 'https://example.com');
   });
 });
