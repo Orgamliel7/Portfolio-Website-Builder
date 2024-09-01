@@ -71,8 +71,13 @@ const IconButton = styled.button`
   border: none;
   cursor: pointer;
   font-size: 1.5em;
-  color: #3498db;
+  color: ${props => props.color || '#3498db'}; /* Default color is blue */
   margin: 0 10px;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: ${props => props.hoverColor || '#2980b9'}; /* Default hover color is a darker blue */
+  }
 `;
 
 const StyledInput = styled.input`
@@ -216,7 +221,13 @@ const App = () => {
                 {userData.projects && userData.projects.map(item => (
                   <PortfolioItem key={item.id} {...item} />
                 ))}
-                <IconButton onClick={() => setShowProjectInput(!showProjectInput)}><FaPlus /> Add Project</IconButton>
+                <IconButton 
+                  onClick={() => setShowProjectInput(!showProjectInput)}
+                  color="#000"        /* Set the color to black */
+                  hoverColor="#555"   /* Optional: Change the hover color if desired */
+                >
+                  <FaPlus /> Add Project
+                </IconButton>
                 {showProjectInput && (
                   <ProjectForm onSubmit={handleAddProject} />
                 )}
@@ -232,7 +243,6 @@ const App = () => {
   );
 };
 
-// The missing ProjectForm component
 const ProjectForm = ({ onSubmit }) => {
   const [project, setProject] = useState({ title: '', description: '', imageUrl: '', projectUrl: '' });
 
